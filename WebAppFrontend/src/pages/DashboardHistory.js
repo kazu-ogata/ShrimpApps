@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 const STORAGE_KEY = "shrimp_history_v1";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 async function fetchHistoryFromBackend() {
   const storedUser = localStorage.getItem('shrimpSense_user');
   let ownerId = null;
@@ -21,7 +23,8 @@ async function fetchHistoryFromBackend() {
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/biomass-records?ownerId=${ownerId}`);
+    //const res = await fetch(`http://localhost:5000/api/biomass-records?ownerId=${ownerId}`);
+    const res = await fetch(`${API_URL}/api/biomass-records?ownerId=${ownerId}`);
     if (!res.ok) throw new Error('Network error');
     const data = await res.json();
     // Normalize backend fields to the frontend shape
@@ -159,7 +162,8 @@ export default function DashboardHistory() {
                       <button
                         onClick={async () => {
                           try {
-                            const res = await fetch(`http://localhost:5000/api/biomass-records/${item.id}`, {
+                            // const res = await fetch(`http://localhost:5000/api/biomass-records/${item.id}`, {
+                            const res = await fetch(`${API_URL}/api/biomass-records/${item.id}`, {
                               method: 'DELETE',
                             });
                             if (!res.ok) throw new Error('Failed to delete record');

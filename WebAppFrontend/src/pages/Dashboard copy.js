@@ -4,6 +4,8 @@ import { Icon } from "@iconify/react";
 
 const STORAGE_KEY = "shrimp_history_v1";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 function saveResultToStorage(result) {
   const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   all.unshift(result);
@@ -68,7 +70,8 @@ export default function Dashboard_upload() {
 
         formData.append('ownerId', ownerId);
 
-        const res = await fetch('http://localhost:5000/api/uploadimage', {
+        //const res = await fetch('http://localhost:5000/api/uploadimage', {
+        const res = await fetch(`${API_URL}/api/uploadimage`, {
           method: 'POST',
           body: formData,
         });

@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const STORAGE_KEY = 'shrimp_history_v1';
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 async function fetchLatestResultFromBackend() {
   const storedUser = localStorage.getItem('shrimpSense_user');
   let ownerId = null;
@@ -21,7 +23,8 @@ async function fetchLatestResultFromBackend() {
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/results?ownerId=${ownerId}`);
+    // const res = await fetch(`http://localhost:5000/api/results?ownerId=${ownerId}`);
+    const res = await fetch(`${API_URL}/api/results?ownerId=${ownerId}`);
     if (!res.ok) throw new Error('Network error');
     const data = await res.json();
     if (!data || Object.keys(data).length === 0) return null;
@@ -60,7 +63,8 @@ async function fetchResultById(id) {
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/biomass-records?ownerId=${ownerId}`);
+    // const res = await fetch(`http://localhost:5000/api/biomass-records?ownerId=${ownerId}`);
+    const res = await fetch(`${API_URL}/api/biomass-records?ownerId=${ownerId}`);
     if (!res.ok) throw new Error('Network error');
     const all = await res.json();
     const match = (all || []).find(r => String(r._id || r.recordId) === String(id));
