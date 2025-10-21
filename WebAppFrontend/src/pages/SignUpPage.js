@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 const SignUpPage = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     email: '',
@@ -102,7 +104,7 @@ const SignUpPage = ({ onLogin }) => {
     try {
       // Try backend signup
       const payload = { username: formData.username, email: formData.email, password: formData.password };
-      const res = await fetch('http://localhost:5000/api/auth/signup', {
+      const res = await fetch(`${API_URL}/api/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
