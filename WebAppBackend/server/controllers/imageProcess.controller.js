@@ -41,7 +41,7 @@ export const processImage = async (req, res) => {
             formData,
             {
                 headers: formData.getHeaders(),
-                timeout: 120000 // increase timeout for model inference
+                timeout: 180000 // increase timeout for model inference
             }
         );
         
